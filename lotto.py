@@ -27,7 +27,7 @@ class Lotto:
         self.en6.place(x=610, y=30)
 
         # Randomise button
-        self.r_btn = Button(master, text="randomise", command=self.get_numbers)
+        self.r_btn = Button(master, text="randomise", command=self.differenciate)
         self.r_btn.place(x=250, y=280)
 
         # Out put of random numbers
@@ -47,7 +47,7 @@ class Lotto:
     def r_numbers(self):
         self.r_num = random.sample(range(1, 49), 6)
         self.r_num.sort()
-        print(self.r_num)
+        # print(self.r_num)
         self.r0.config(text=self.r_num[0])
         self.r1.config(text=self.r_num[1])
         self.r2.config(text=self.r_num[2])
@@ -55,6 +55,7 @@ class Lotto:
         self.r4.config(text=self.r_num[4])
         self.r5.config(text=self.r_num[5])
 
+    # Function to get the numbers from user and convert them to a list
     def get_numbers(self):
         user_list = []
         user_list.append(int(self.en1.get("1.0", END)))
@@ -64,7 +65,16 @@ class Lotto:
         user_list.append(int(self.en5.get("1.0", END)))
         user_list.append(int(self.en6.get("1.0", END)))
 
-        print(user_list)
+        user_list.sort()
+        # print(user_list)
+        self.r_numbers()
+
+    def differenciate(self):
+        self.r_numbers()
+        self.get_numbers()
+        self.res = (list(list(set(self.r_numbers()) - set(self.get_numbers())) + list(set(self.get_numbers()) - set(self.r_numbers()))))
+
+        print(self.res)
 
 
 root = Tk()
