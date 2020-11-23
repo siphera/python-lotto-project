@@ -27,7 +27,7 @@ class Lotto:
         self.en6.place(x=610, y=30)
 
         # Randomise button
-        self.r_btn = Button(master, text="randomise", command=self.r_numbers)
+        self.r_btn = Button(master, text="randomise", command=self.get_numbers)
         self.r_btn.place(x=250, y=280)
 
         # Out put of random numbers
@@ -55,6 +55,16 @@ class Lotto:
         self.r4.config(text=self.r_num[4])
         self.r5.config(text=self.r_num[5])
 
+    def get_numbers(self):
+        user_list = []
+        user_list.append(int(self.en1.get("1.0", END)))
+        user_list.append(int(self.en2.get("1.0", END)))
+        user_list.append(int(self.en3.get("1.0", END)))
+        user_list.append(int(self.en4.get("1.0", END)))
+        user_list.append(int(self.en5.get("1.0", END)))
+        user_list.append(int(self.en6.get("1.0", END)))
+
+        print(user_list)
 
 
 root = Tk()
