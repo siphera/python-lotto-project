@@ -62,11 +62,11 @@ class Lotto:
         self.user_list.append(int(self.en5.get()))
         self.user_list.append(int(self.en6.get()))
         self.user_list.sort()
-        print(self.user_list)
+        print('user', self.user_list)
 
         self.r_num = random.sample(range(1, 49), 6)
         self.r_num.sort()
-        print(self.r_num)
+        print('random: ', self.r_num)
 
         if len(self.user_list) != len(set(self.user_list)):
             self.message_box = messagebox.showerror('Input Error', 'Make sure you do not repeat inputs')
