@@ -2,6 +2,7 @@
 
 # Imports
 from tkinter import *
+from tkinter import ttk
 import random
 from tkinter import messagebox
 
@@ -11,24 +12,26 @@ class Lotto:
         self.master = master
         self.master.title('Lotto Machine: Siphenkosi Salman')
         self.master.geometry("740x500")
+        self.style = ttk.Style()
+        self.style.configure('My.TSpinbox', arrowsize=25)
 
         # My number entries
-        self.en1 = Text(master, width=5, height=2, bd=8, relief=RIDGE, font=("arial", 25, 'bold'))
+        self.en1 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'), state='readonly')
         self.en1.place(x=10, y=30)
-        self.en2 = Text(master, width=5, height=2, bd=8, relief=RIDGE, font=("arial", 25, 'bold'))
+        self.en2 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'), state='readonly')
         self.en2.place(x=130, y=30)
-        self.en3 = Text(master, width=5, height=2, bd=8, relief=RIDGE, font=("arial", 25, 'bold'))
+        self.en3 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'), state='readonly')
         self.en3.place(x=250, y=30)
-        self.en4 = Text(master, width=5, height=2, bd=8, relief=RIDGE, font=("arial", 25, 'bold'))
+        self.en4 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'), state='readonly')
         self.en4.place(x=370, y=30)
-        self.en5 = Text(master, width=5, height=2, bd=8, relief=RIDGE, font=("arial", 25, 'bold'))
+        self.en5 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'), state='readonly')
         self.en5.place(x=490, y=30)
-        self.en6 = Text(master, width=5, height=2, bd=8, relief=RIDGE, font=("arial", 25, 'bold'))
+        self.en6 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'), state='readonly')
         self.en6.place(x=610, y=30)
 
         # Randomise button
-        self.r_btn = Button(master, text="randomise", command=self.differenciate)
-        self.r_btn.place(x=250, y=280)
+        self.r_btn = Button(master, text="randomise", fg="white", bg="green", command=self.get_numbers)
+        self.r_btn.place(x=320, y=280)
 
         # Out put of random numbers
         self.r0 = Label(master, font=("arial", 25, "bold"), bg="yellow", width=5, height=2, bd=8, relief=RIDGE)
@@ -44,37 +47,62 @@ class Lotto:
         self.r5 = Label(master, font=("arial", 25, "bold"), bg="red", width=5, height=2, bd=8, relief=RIDGE)
         self.r5.place(x=610, y=350)
 
-    def r_numbers(self):
-        self.r_num = random.sample(range(1, 49), 6)
-        self.r_num.sort()
-        # print(self.r_num)
-        self.r0.config(text=self.r_num[0])
-        self.r1.config(text=self.r_num[1])
-        self.r2.config(text=self.r_num[2])
-        self.r3.config(text=self.r_num[3])
-        self.r4.config(text=self.r_num[4])
-        self.r5.config(text=self.r_num[5])
+        # Exit button
+        self.exit_btn = Button(master, text="Exit", bg="red", fg="white", command=self.exit)
+        self.exit_btn.place(x=340, y=460)
+
 
     # Function to get the numbers from user and convert them to a list
     def get_numbers(self):
-        user_list = []
-        user_list.append(int(self.en1.get("1.0", END)))
-        user_list.append(int(self.en2.get("1.0", END)))
-        user_list.append(int(self.en3.get("1.0", END)))
-        user_list.append(int(self.en4.get("1.0", END)))
-        user_list.append(int(self.en5.get("1.0", END)))
-        user_list.append(int(self.en6.get("1.0", END)))
+        self.user_list = []
+        self.user_list.append(int(self.en1.get()))
+        self.user_list.append(int(self.en2.get()))
+        self.user_list.append(int(self.en3.get()))
+        self.user_list.append(int(self.en4.get()))
+        self.user_list.append(int(self.en5.get()))
+        self.user_list.append(int(self.en6.get()))
+        self.user_list.sort()
+        print(self.user_list)
 
-        user_list.sort()
-        # print(user_list)
-        self.r_numbers()
+        self.r_num = random.sample(range(1, 49), 6)
+        self.r_num.sort()
+        print(self.r_num)
 
-    def differenciate(self):
-        self.r_numbers()
-        self.get_numbers()
-        self.res = (list(list(set(self.r_numbers()) - set(self.get_numbers())) + list(set(self.get_numbers()) - set(self.r_numbers()))))
+        if len(self.user_list) != len(set(self.user_list)):
+            self.message_box = messagebox.showerror('Input Error', 'Make sure you do not repeat inputs')
 
-        print(self.res)
+        else:
+            self.r0.config(text=self.r_num[0])
+            self.r1.config(text=self.r_num[1])
+            self.r2.config(text=self.r_num[2])
+            self.r3.config(text=self.r_num[3])
+            self.r4.config(text=self.r_num[4])
+            self.r5.config(text=self.r_num[5])
+
+            # Compare the two lists and filter the numbers that match
+            self.res = list(set(self.user_list).intersection(self.r_num))
+            print("matching are: ", self.res)
+
+            if len(self.res) == 6:
+                self.message_box = messagebox.showinfo('Congatulations', 'You have won R10, 000 000.00')
+            elif len(self.res) == 5:
+                self.message_box = messagebox.showinfo('Congatulations', 'You have won R8,584.00')
+            elif len(self.res) == 4:
+                self.message_box = messagebox.showinfo('Congatulations', 'You have won R2,384.00')
+            elif len(self.res) == 3:
+                self.message_box = messagebox.showinfo('Congatulations', 'You have won R100.50')
+            elif len(self.res) == 2:
+                self.message_box = messagebox.showinfo('Congatulations', 'You have won R20.00')
+            elif len(self.res) < 2:
+                self.message_box = messagebox.showinfo('You lose', 'Try again next time')
+
+    # Method for the exit Button
+    def exit(self):
+        self.message_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application')
+        if self.message_box == 'yes':
+            self.master.quit()
+        else:
+            pass
 
 
 root = Tk()
