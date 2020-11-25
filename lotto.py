@@ -1,4 +1,4 @@
-# Siphenkosi Salman
+# Siphenkosi Salman ==> Class 1
 
 # Imports
 from tkinter import *
@@ -16,25 +16,38 @@ class Lotto:
         self.style = ttk.Style()
         self.style.configure('My.TSpinbox', arrowsize=25)
 
+        # Player details
+        self.name_lbl = Label(master, text="Player name:")
+        self.name_lbl.place(x=10, y=30)
+
+        self.name_entry = Entry(master)
+        self.name_entry.place(x=110, y=30)
+
+        self.number_lbl = Label(master, text="Player Number:")
+        self.number_lbl.place(x=350, y=30)
+
+        self.number_entry = Entry(master)
+        self.number_entry.place(x=470, y=30)
+
         # My number entries
         self.en1 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
                                state='readonly')
-        self.en1.place(x=10, y=30)
+        self.en1.place(x=10, y=100)
         self.en2 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
                                state='readonly')
-        self.en2.place(x=130, y=30)
+        self.en2.place(x=130, y=100)
         self.en3 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
                                state='readonly')
-        self.en3.place(x=250, y=30)
+        self.en3.place(x=250, y=100)
         self.en4 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
                                state='readonly')
-        self.en4.place(x=370, y=30)
+        self.en4.place(x=370, y=100)
         self.en5 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
                                state='readonly')
-        self.en5.place(x=490, y=30)
+        self.en5.place(x=490, y=100)
         self.en6 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
                                state='readonly')
-        self.en6.place(x=610, y=30)
+        self.en6.place(x=610, y=100)
 
         # Randomise button
         self.r_btn = Button(master, text="randomise", fg="white", bg="green", command=self.get_numbers)
@@ -69,11 +82,10 @@ class Lotto:
             self.user_list.append(int(self.en5.get()))
             self.user_list.append(int(self.en6.get()))
             self.user_list.sort()
-            print('user', self.user_list)
+            print('user: ', self.user_list)
 
         except ValueError:
-            self.message_box = messagebox.showwarning('Fill all inputs',
-                                                      'Please make sure that you entered 6 numbers')
+            messagebox.showwarning('Fill all inputs', 'Please make sure that you entered 6 numbers')
         # Generating the random numbers and sorting them in ascending order
         self.r_num = random.sample(range(1, 49), 6)
         self.r_num.sort()
@@ -95,21 +107,37 @@ class Lotto:
                 self.res = list(set(self.user_list).intersection(self.r_num))
                 print("matching are: ", self.res)
 
+                self.file = open('lotto_storage.txt', 'a')
+                self.player_name = self.name_entry.get()
+                self.player_number = self.number_entry.get()
+
                 if len(self.res) == 6:
-                    self.message_box = messagebox.showinfo('Congatulations', 'You have won R10, 000 000.00')
+                    messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R10, 000 000.00')
+                    self.file.write(f'{self.player_name}: won R10, 000 000.00 \n')
+                    self.file.close()
                 elif len(self.res) == 5:
-                    self.message_box = messagebox.showinfo('Congatulations', 'You have won R8,584.00')
+                    messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R8,584.00')
+                    self.file.write(f'{self.player_name}: won R8,584.00 \n')
+                    self.file.close()
                 elif len(self.res) == 4:
-                    self.message_box = messagebox.showinfo('Congatulations', 'You have won R2,384.00')
+                    messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R2,384.00')
+                    self.file.write(f'{self.player_name}: won R2,384.00 \n')
+                    self.file.close()
                 elif len(self.res) == 3:
-                    self.message_box = messagebox.showinfo('Congatulations', 'You have won R100.50')
+                    messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R100.50')
+                    self.file.write(f'{self.player_name}: won R100.50 \n')
+                    self.file.close()
                 elif len(self.res) == 2:
-                    self.message_box = messagebox.showinfo('Congatulations', 'You have won R20.00')
+                    messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R20.00')
+                    self.file.write(f'{self.player_name}: won R20.00 \n')
+                    self.file.close()
                 elif len(self.res) < 2:
-                    self.message_box = messagebox.showinfo('You lose', 'Try again next time')
+                    messagebox.showinfo('You lose', 'Try again next time')
+                    self.file.write(f'{self.player_name}: Lost \n')
+                    self.file.close()
 
             except ValueError:
-                self.message_box = messagebox.showwarning('Fill all inputs',
+                messagebox.showwarning('Fill all inputs',
                                                           'Please make sure that you entered 6 numbers')
 
     # Method for the exit Button

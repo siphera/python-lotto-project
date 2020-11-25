@@ -1,46 +1,8 @@
+# Siphenkosi Salman ==> Class 1
+
 from tkinter import *
-import tkinter as tk
 from tkinter import messagebox
-
-
-class RoundedButton(tk.Canvas):
-    def __init__(self, parent, width, height, cornerradius, padding, color, bg, command=None):
-        tk.Canvas.__init__(self, parent, borderwidth=0,
-            relief="flat", highlightthickness=0, bg=bg)
-        self.command = command
-
-        if cornerradius > 0.5*width:
-            print("Error: cornerradius is greater than width.")
-            return None
-
-        if cornerradius > 0.5*height:
-            print("Error: cornerradius is greater than height.")
-            return None
-
-        rad = 2*cornerradius
-        def shape():
-            self.create_polygon((padding,height-cornerradius-padding,padding,cornerradius+padding,padding+cornerradius,padding,width-padding-cornerradius,padding,width-padding,cornerradius+padding,width-padding,height-cornerradius-padding,width-padding-cornerradius,height-padding,padding+cornerradius,height-padding), fill=color, outline=color)
-            self.create_arc((padding,padding+rad,padding+rad,padding), start=90, extent=90, fill=color, outline=color)
-            self.create_arc((width-padding-rad,padding,width-padding,padding+rad), start=0, extent=90, fill=color, outline=color)
-            self.create_arc((width-padding,height-rad-padding,width-padding-rad,height-padding), start=270, extent=90, fill=color, outline=color)
-            self.create_arc((padding,height-padding-rad,padding+rad,height-padding), start=180, extent=90, fill=color, outline=color)
-
-
-        id = shape()
-        (x0,y0,x1,y1)  = self.bbox("all")
-        width = (x1-x0)
-        height = (y1-y0)
-        self.configure(width=width, height=height)
-        self.bind("<ButtonPress-1>", self._on_press)
-        self.bind("<ButtonRelease-1>", self._on_release)
-
-    def _on_press(self, event):
-        self.configure(relief="sunken")
-
-    def _on_release(self, event):
-        self.configure(relief="raised")
-        if self.command is not None:
-            self.command()
+from datetime import date
 
 
 class Login:
@@ -59,18 +21,23 @@ class Login:
         self.btn = Button(master, text="Play", font=("arial", 10), bg="skyblue", fg="white", command=self.login)
         self.btn.place(x=300, y=150)
 
-
     def login(self):
-        self.age = int(self.age_entry.get())
 
         try:
-            if self.age >= 18:
+            self.age = int(self.age_entry.get())
+            self.today = date.today()
+            if 18 <= self.age <= 110 and type(self.age) == int:
                 messagebox.showinfo("Successful", "Congatulations you qualify to play")
+                file = open('lotto_storage.txt', 'w')
+                file.write('File created on: ' + str(self.today) + "\n")
+                file.close()
                 self.master.destroy()
                 import lotto
                 lotto.Lotto
+            elif type(self.age) == str:
+                messagebox.showerror("Invalid Input", "Please make sure you enter valid input")
             else:
-                messagebox.showwarning("Warning", "You are too young")
+                messagebox.showwarning("Warning", "Sorry you can't play")
                 self.age_entry.delete(0, END)
         except ValueError:
             messagebox.showerror("Invalid Input", "Please make sure you enter valid input")
