@@ -21,6 +21,10 @@ class Login:
         self.btn = Button(master, text="Play", font=("arial", 10), bg="skyblue", fg="white", command=self.login)
         self.btn.place(x=300, y=150)
 
+        # Exit button
+        self.exit_btn = Button(master, text="Exit", bg="red", fg="white", command=self.exit)
+        self.exit_btn.place(x=340, y=220)
+
     def login(self):
 
         try:
@@ -29,7 +33,7 @@ class Login:
             if 18 <= self.age <= 110 and type(self.age) == int:
                 messagebox.showinfo("Successful", "Congatulations you qualify to play")
                 file = open('lotto_storage.txt', 'w')
-                file.write('File created on: ' + str(self.today) + "\n")
+                file.write('File created on: ' + str(self.today) + "\n \n")
                 file.close()
                 self.master.destroy()
                 import lotto
@@ -41,6 +45,14 @@ class Login:
                 self.age_entry.delete(0, END)
         except ValueError:
             messagebox.showerror("Invalid Input", "Please make sure you enter valid input")
+
+        # Method for the exit Button
+    def exit(self):
+        self.message_box = messagebox.askquestion('Exit Application', 'Are you sure you want to exit the application')
+        if self.message_box == 'yes':
+            self.master.destroy()
+        else:
+            pass
 
 
 root = Tk()

@@ -5,6 +5,7 @@ from tkinter import *
 from tkinter import ttk
 import random
 from tkinter import messagebox
+from datetime import date
 
 
 class Lotto:
@@ -67,6 +68,10 @@ class Lotto:
         self.r5 = Label(master, font=("arial", 25, "bold"), bg="red", width=5, height=2, bd=8, relief=RIDGE)
         self.r5.place(x=610, y=350)
 
+        # Clear button
+        self.clear_btn = Button(master, text="Clear", bg="blue", fg="white", command=self.clear)
+        self.clear_btn.place(x=200, y=460)
+
         # Exit button
         self.exit_btn = Button(master, text="Exit", bg="red", fg="white", command=self.exit)
         self.exit_btn.place(x=340, y=460)
@@ -110,35 +115,78 @@ class Lotto:
                 self.file = open('lotto_storage.txt', 'a')
                 self.player_name = self.name_entry.get()
                 self.player_number = self.number_entry.get()
+                self.today = date.today()
 
                 if len(self.res) == 6:
                     messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R10, 000 000.00')
                     self.file.write(f'{self.player_name}: won R10, 000 000.00 \n')
+                    self.file.write(f'Cell No: {self.player_number} \n')
+                    self.file.write('Date: ' + str(self.today) + "\n \n")
                     self.file.close()
                 elif len(self.res) == 5:
                     messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R8,584.00')
                     self.file.write(f'{self.player_name}: won R8,584.00 \n')
+                    self.file.write(f'Cell No: {self.player_number} \n')
+                    self.file.write('Date: ' + str(self.today) + "\n \n")
                     self.file.close()
                 elif len(self.res) == 4:
                     messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R2,384.00')
                     self.file.write(f'{self.player_name}: won R2,384.00 \n')
+                    self.file.write(f'Cell No: {self.player_number} \n')
+                    self.file.write('Date: ' + str(self.today) + "\n \n")
                     self.file.close()
                 elif len(self.res) == 3:
                     messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R100.50')
                     self.file.write(f'{self.player_name}: won R100.50 \n')
+                    self.file.write(f'Cell No: {self.player_number} \n')
+                    self.file.write('Date: ' + str(self.today) + "\n \n")
                     self.file.close()
                 elif len(self.res) == 2:
                     messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R20.00')
                     self.file.write(f'{self.player_name}: won R20.00 \n')
+                    self.file.write(f'Cell No: {self.player_number} \n')
+                    self.file.write('Date: ' + str(self.today) + "\n \n")
                     self.file.close()
                 elif len(self.res) < 2:
                     messagebox.showinfo('You lose', 'Try again next time')
-                    self.file.write(f'{self.player_name}: Lost \n')
-                    self.file.close()
+                    # self.file.write(f'{self.player_name}: Lost \n')
+                    # self.file.write(f'Cell No: {self.player_number} \n \n')
+                    # self.file.close()
 
             except ValueError:
-                messagebox.showwarning('Fill all inputs',
-                                                          'Please make sure that you entered 6 numbers')
+                messagebox.showwarning('Fill all inputs', 'Please make sure that you entered 6 numbers')
+    # Method for clearing the inputs and outputs
+    def clear(self):
+        self.name_entry.delete(0, END)
+        self.number_entry.delete(0, END)
+        # Enabling the state of the spinbox so it can be cleared
+        self.en1.config(state="normal")
+        self.en2.config(state="normal")
+        self.en3.config(state="normal")
+        self.en4.config(state="normal")
+        self.en5.config(state="normal")
+        self.en6.config(state="normal")
+        # clearing the spinbox
+        self.en1.delete(0, END)
+        self.en2.delete(0, END)
+        self.en3.delete(0, END)
+        self.en4.delete(0, END)
+        self.en5.delete(0, END)
+        self.en6.delete(0, END)
+        # Disabling the state of the spinbox after it has been cleared
+        self.en1.config(state="readonly")
+        self.en2.config(state="readonly")
+        self.en3.config(state="readonly")
+        self.en4.config(state="readonly")
+        self.en5.config(state="readonly")
+        self.en6.config(state="readonly")
+        # clear the random numbers output
+        self.r0.config(text='0')
+        self.r1.config(text='0')
+        self.r2.config(text='0')
+        self.r3.config(text='0')
+        self.r4.config(text='0')
+        self.r5.config(text='0')
 
     # Method for the exit Button
     def exit(self):
