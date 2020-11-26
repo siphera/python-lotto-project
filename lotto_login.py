@@ -3,6 +3,7 @@
 from tkinter import *
 from tkinter import messagebox
 from datetime import date
+from PIL import Image, ImageTk
 
 
 class Login:
@@ -12,18 +13,22 @@ class Login:
         self.master.geometry("740x500")
         self.master.resizable(False, False)
 
+        self.my_image = ImageTk.PhotoImage(Image.open("lotto.png"))
+        self.image_label = Label(image=self.my_image)
+        self.image_label.place(x=280, y=30)
+
         self.lbl1 = Label(master, text="Enter your age", font=("arial", 20))
-        self.lbl1.place(x=290, y=30)
+        self.lbl1.place(x=290, y=130)
 
         self.age_entry = Entry(master)
-        self.age_entry.place(x=300, y=70)
+        self.age_entry.place(x=300, y=170)
 
         self.btn = Button(master, text="Play", font=("arial", 10), bg="skyblue", fg="white", command=self.login)
-        self.btn.place(x=300, y=150)
+        self.btn.place(x=300, y=250)
 
         # Exit button
         self.exit_btn = Button(master, text="Exit", bg="red", fg="white", command=self.exit)
-        self.exit_btn.place(x=340, y=220)
+        self.exit_btn.place(x=340, y=320)
 
     def login(self):
 
