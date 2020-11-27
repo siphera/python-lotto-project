@@ -54,29 +54,14 @@ print(len(res))'''
 
 print(common_elements(list1,list2))'''
 
-from tkinter import *
-from tkinter.messagebox import showerror
-
-class GUI:
-    def __init__(self, parent):
-        self.iv = IntVar()
-        self.sb = Spinbox(parent, from_=0, to=10, textvariable = self.iv)
-        self.sb.pack()
-        self.b1 = Button(parent, text="Confirm", command=self.validate)
-        self.b1.pack()
-
-    def validate(self):
-        nb = self.sb.get()
-        try:
-            nb = int(nb)
-            # do something with the number
-            print(nb)
-        except Exception:
-            showerror('Error', 'Invalid content')
+from datetime import date
 
 
-root = Tk()
-root.geometry("800x600")
-GUI = GUI(root)
-root.title("Example")
-root.mainloop()
+def calculateAge(birthDate):
+    today = date.today()
+    age = today.year - birthDate.year - ((today.month, today.day) < (birthDate.month, birthDate.day))
+    return age
+
+
+# Driver code
+print(calculateAge(date(2002, 11, 26)), "years")

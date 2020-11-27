@@ -6,75 +6,90 @@ from tkinter import ttk
 import random
 from tkinter import messagebox
 from datetime import date
+from PIL import Image, ImageTk
 
 
 class Lotto:
     def __init__(self, master):
         self.master = master
         self.master.title('Lotto Machine: Siphenkosi Salman')
-        self.master.geometry("740x500")
+        self.master.geometry("740x520")
+        self.master.configure(bg='yellow')
         self.master.resizable(False, False)
         self.style = ttk.Style()
-        self.style.configure('My.TSpinbox', arrowsize=25)
+        self.style.configure('My.TSpinbox', arrowsize=15)
+
+        self.my_image = ImageTk.PhotoImage(Image.open("lotto.png"))
+        self.image_label = Label(image=self.my_image, bg="yellow", pady=45, padx=45)
+        self.image_label.place(x=280, y=30)
 
         # Player details
-        self.name_lbl = Label(master, text="Player name:")
+        self.details_frame = LabelFrame(master)
+        self.details_frame.place(x=50, y=150, width=645, height=80)
+
+        self.name_lbl = Label(self.details_frame, text="Player name:")
         self.name_lbl.place(x=10, y=30)
 
-        self.name_entry = Entry(master)
+        self.name_entry = Entry(self.details_frame)
         self.name_entry.place(x=110, y=30)
 
-        self.number_lbl = Label(master, text="Player Number:")
+        self.number_lbl = Label(self.details_frame, text="Player Number:")
         self.number_lbl.place(x=350, y=30)
 
-        self.number_entry = Entry(master)
+        self.number_entry = Entry(self.details_frame)
         self.number_entry.place(x=470, y=30)
 
         # My number entries
-        self.en1 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
+        self.entry_frame = LabelFrame(master)
+        self.entry_frame.place(x=50, y=240, width=645, height=80)
+
+        self.en1 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width=2, font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en1.place(x=10, y=100)
-        self.en2 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
+        self.en1.place(x=10, y=10)
+        self.en2 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en2.place(x=130, y=100)
-        self.en3 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
+        self.en2.place(x=110, y=10)
+        self.en3 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en3.place(x=250, y=100)
-        self.en4 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
+        self.en3.place(x=230, y=10)
+        self.en4 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en4.place(x=370, y=100)
-        self.en5 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
+        self.en4.place(x=330, y=10)
+        self.en5 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en5.place(x=490, y=100)
-        self.en6 = ttk.Spinbox(master, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 40, 'bold'),
+        self.en5.place(x=460, y=10)
+        self.en6 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en6.place(x=610, y=100)
+        self.en6.place(x=555, y=10)
 
         # Randomise button
         self.r_btn = Button(master, text="randomise", fg="white", bg="green", command=self.click)
-        self.r_btn.place(x=320, y=280)
+        self.r_btn.place(x=320, y=330)
 
         # Out put of random numbers
-        self.r0 = Label(master, text="0", font=("arial", 25, "bold"), bg="yellow", width=5, height=2, bd=8, relief=RIDGE)
-        self.r0.place(x=10, y=350)
-        self.r1 = Label(master, text="0", font=("arial", 25, "bold"), bg="green", width=5, height=2, bd=8, relief=RIDGE)
-        self.r1.place(x=130, y=350)
-        self.r2 = Label(master, text="0", font=("arial", 25, "bold"), bg="blue", width=5, height=2, bd=8, relief=RIDGE)
-        self.r2.place(x=250, y=350)
-        self.r3 = Label(master, text="0", font=("arial", 25, "bold"), bg="tan", width=5, height=2, bd=8, relief=RIDGE)
-        self.r3.place(x=370, y=350)
-        self.r4 = Label(master, text="0", font=("arial", 25, "bold"), bg="magenta", width=5, height=2, bd=8, relief=RIDGE)
-        self.r4.place(x=490, y=350)
-        self.r5 = Label(master, text="0", font=("arial", 25, "bold"), bg="red", width=5, height=2, bd=8, relief=RIDGE)
-        self.r5.place(x=610, y=350)
+        self.random_frame = LabelFrame(master)
+        self.random_frame.place(x=50, y=380, width=645, height=80)
+
+        self.r0 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="yellow", width=3, height=1, bd=5, relief=RIDGE)
+        self.r0.place(x=10, y=10)
+        self.r1 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="green", width=3, height=1, bd=5, relief=RIDGE)
+        self.r1.place(x=100, y=10)
+        self.r2 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="blue", width=3, height=1, bd=5, relief=RIDGE)
+        self.r2.place(x=190, y=10)
+        self.r3 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="tan", width=3, height=1, bd=5, relief=RIDGE)
+        self.r3.place(x=360, y=10)
+        self.r4 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="magenta", width=3, height=1, bd=5, relief=RIDGE)
+        self.r4.place(x=460, y=10)
+        self.r5 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="red", width=3, height=1, bd=5, relief=RIDGE)
+        self.r5.place(x=550, y=10)
 
         # Clear button
         self.clear_btn = Button(master, text="Clear", bg="blue", fg="white", command=self.clear)
-        self.clear_btn.place(x=200, y=460)
+        self.clear_btn.place(x=60, y=470)
 
         # Exit button
         self.exit_btn = Button(master, text="Exit", bg="red", fg="white", command=self.exit)
-        self.exit_btn.place(x=340, y=460)
+        self.exit_btn.place(x=640, y=470)
 
     # Method to get the numbers from user and convert them to a list=====>>..>>
     def get_numbers(self):
