@@ -37,33 +37,36 @@ class Lotto:
         self.number_lbl.place(x=350, y=30)
 
         self.number_entry = Entry(self.details_frame)
-        self.number_entry.place(x=470, y=30)
+        self.number_entry.place(x=460, y=30)
 
         # My number entries
         self.entry_frame = LabelFrame(master)
-        self.entry_frame.place(x=50, y=240, width=645, height=80)
+        self.entry_frame.place(x=50, y=240, width=645, height=85)
+
+        self.choose = Label(self.entry_frame, text="Choose your numbers")
+        self.choose.place(x=240, y=2)
 
         self.en1 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width=2, font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en1.place(x=10, y=10)
+        self.en1.place(x=10, y=25)
         self.en2 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en2.place(x=110, y=10)
+        self.en2.place(x=117, y=25)
         self.en3 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en3.place(x=230, y=10)
+        self.en3.place(x=230, y=25)
         self.en4 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en4.place(x=330, y=10)
+        self.en4.place(x=334, y=25)
         self.en5 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en5.place(x=460, y=10)
+        self.en5.place(x=453, y=25)
         self.en6 = ttk.Spinbox(self.entry_frame, style='My.TSpinbox', from_=1, to=49, width="2", font=("arial", 30, 'bold'),
                                state='readonly')
-        self.en6.place(x=555, y=10)
+        self.en6.place(x=555, y=25)
 
         # Randomise button
-        self.r_btn = Button(master, text="randomise", fg="white", bg="green", command=self.click)
+        self.r_btn = Button(master, text="Results", fg="white", bg="green", font=("arial", 10, "bold"), padx=40, command=self.click)
         self.r_btn.place(x=320, y=330)
 
         # Out put of random numbers
@@ -73,23 +76,23 @@ class Lotto:
         self.r0 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="yellow", width=3, height=1, bd=5, relief=RIDGE)
         self.r0.place(x=10, y=10)
         self.r1 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="green", width=3, height=1, bd=5, relief=RIDGE)
-        self.r1.place(x=100, y=10)
+        self.r1.place(x=120, y=10)
         self.r2 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="blue", width=3, height=1, bd=5, relief=RIDGE)
-        self.r2.place(x=190, y=10)
+        self.r2.place(x=230, y=10)
         self.r3 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="tan", width=3, height=1, bd=5, relief=RIDGE)
-        self.r3.place(x=360, y=10)
+        self.r3.place(x=340, y=10)
         self.r4 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="magenta", width=3, height=1, bd=5, relief=RIDGE)
-        self.r4.place(x=460, y=10)
+        self.r4.place(x=450, y=10)
         self.r5 = Label(self.random_frame, text="0", font=("arial", 25, "bold"), bg="red", width=3, height=1, bd=5, relief=RIDGE)
-        self.r5.place(x=550, y=10)
+        self.r5.place(x=560, y=10)
 
         # Clear button
-        self.clear_btn = Button(master, text="Clear", bg="blue", fg="white", command=self.clear)
-        self.clear_btn.place(x=60, y=470)
+        self.clear_btn = Button(master, text="Clear", bg="blue", fg="white", font=("arial", 10, "bold"), padx=40, command=self.clear)
+        self.clear_btn.place(x=50, y=470)
 
         # Exit button
-        self.exit_btn = Button(master, text="Exit", bg="red", fg="white", command=self.exit)
-        self.exit_btn.place(x=640, y=470)
+        self.exit_btn = Button(master, text="Exit", bg="red", fg="white", font=("arial", 10, "bold"), padx=40, command=self.exit)
+        self.exit_btn.place(x=584, y=470)
 
     # Method to get the numbers from user and convert them to a list=====>>..>>
     def get_numbers(self):
