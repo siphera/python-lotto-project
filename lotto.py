@@ -134,8 +134,6 @@ class Lotto:
             return self.res
 
     def click(self):
-
-
         self.file = open('lotto_storage.txt', 'a')
         self.player_name = self.name_entry.get()
         self.player_number = self.number_entry.get()
@@ -185,7 +183,6 @@ class Lotto:
                 messagebox.showinfo('You lose', 'Try again next time')
         else:
             messagebox.showerror('Input Error', 'Please make sure all the inputs are filled')
-
 
     # Method for clearing the inputs and outputs
     def clear(self):
