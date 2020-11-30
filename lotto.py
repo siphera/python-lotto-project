@@ -5,7 +5,7 @@ from tkinter import *
 from tkinter import ttk
 import random
 from tkinter import messagebox
-from datetime import date
+import datetime
 from PIL import Image, ImageTk
 
 
@@ -137,7 +137,9 @@ class Lotto:
         self.file = open('lotto_storage.txt', 'a')
         self.player_name = self.name_entry.get()
         self.player_number = self.number_entry.get()
-        self.today = date.today()
+        self.today = datetime.datetime.now()
+        self.x = 'Date: ' + self.today.strftime("%x") + '\n' + 'Time: ' +\
+                 self.today.strftime("%X %p")
 
         if len(self.player_name) > 1 and len(self.player_number) > 1:
             # Calling the compare function
@@ -153,31 +155,31 @@ class Lotto:
                 messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R10, 000 000.00')
                 self.file.write(f'{self.player_name}: won R10, 000 000.00 \n')
                 self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.today) + "\n \n")
+                self.file.write('Date: ' + str(self.x) + "\n \n")
                 self.file.close()
             elif len(self.res) == 5:
                 messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R8,584.00')
                 self.file.write(f'{self.player_name}: won R8,584.00 \n')
                 self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.today) + "\n \n")
+                self.file.write('Date: ' + str(self.x) + "\n \n")
                 self.file.close()
             elif len(self.res) == 4:
                 messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R2,384.00')
                 self.file.write(f'{self.player_name}: won R2,384.00 \n')
                 self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.today) + "\n \n")
+                self.file.write('Date: ' + str(self.x) + "\n \n")
                 self.file.close()
             elif len(self.res) == 3:
                 messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R100.50')
                 self.file.write(f'{self.player_name}: won R100.50 \n')
                 self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.today) + "\n \n")
+                self.file.write('Date: ' + str(self.x) + "\n \n")
                 self.file.close()
             elif len(self.res) == 2:
                 messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R20.00')
                 self.file.write(f'{self.player_name}: won R20.00 \n')
                 self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.today) + "\n \n")
+                self.file.write('Date: ' + str(self.x) + "\n \n")
                 self.file.close()
             elif len(self.res) < 2:
                 messagebox.showinfo('You lose', 'Try again next time')

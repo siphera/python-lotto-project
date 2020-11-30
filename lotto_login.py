@@ -25,8 +25,6 @@ class Login:
         self.lbl1 = Label(self.frm, text="Enter your date of birth", font=("arial", 12))
         self.lbl1.place(x=230, y=40)
 
-
-
         self.year_entry = Entry(self.frm, width=4)
         self.year_entry.place(x=235, y=90)
         self.year_entry.insert(0, 'yyyy')
