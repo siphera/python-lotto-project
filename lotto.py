@@ -7,6 +7,7 @@ import random
 from tkinter import messagebox
 import datetime
 from PIL import Image, ImageTk
+import unittest
 
 
 class Lotto:
@@ -98,13 +99,7 @@ class Lotto:
     def get_numbers(self):
         try:
             # Creating a list from the user input
-            self.user_list = []
-            self.user_list.append(int(self.en1.get()))
-            self.user_list.append(int(self.en2.get()))
-            self.user_list.append(int(self.en3.get()))
-            self.user_list.append(int(self.en4.get()))
-            self.user_list.append(int(self.en5.get()))
-            self.user_list.append(int(self.en6.get()))
+            self.user_list = [int(self.en1.get()), int(self.en2.get()), int(self.en3.get()), int(self.en4.get()), int(self.en5.get()), int(self.en6.get())]
             self.user_list.sort()
             print('user: ', self.user_list)
             return self.user_list
@@ -113,7 +108,7 @@ class Lotto:
 
     # Method to generate numbers and sort them
     def generate_random(self):
-        self.r_num = random.sample(range(1, 49), 6)
+        self.r_num = random.sample(range(1, 50), 6)
         self.r_num.sort()
         print('random: ', self.r_num)
         return self.r_num
@@ -133,13 +128,27 @@ class Lotto:
             print("matching are: ", self.res)
             return self.res
 
-    def click(self):
-        self.file = open('lotto_storage.txt', 'a')
+    def file_handling(self):
+        # self.compare_lists()
+        self.prize = {6: "R10, 000 000.00", 5: "R8,584.00", 4: "R2,384.00", 3: "R100.50", 2: "20.00", 1: "R0.00", 0: "R0.00"}
+
         self.player_name = self.name_entry.get()
         self.player_number = self.number_entry.get()
-        self.today = datetime.datetime.now()
-        self.x = 'Date: ' + self.today.strftime("%x") + '\n' + 'Time: ' +\
-                 self.today.strftime("%X %p")
+        self.my_key = len(self.res)
+        self.today = datetime.datetime.now()  # get current date
+
+        # printing to the text file
+        self.file = open('lotto_storage.txt', 'a')
+        self.file.write(f'{self.player_name}: Won {self.prize.get(self.my_key)} \n')
+        self.file.write(f'Cell No: {self.player_number} \n')
+        self.x = self.today.strftime("%x") + '\n' + 'Time: ' + \
+            self.today.strftime("%X %p")
+        self.file.write('Date: ' + str(self.x) + "\n \n")
+        self.file.close()
+
+    def click(self):
+        self.player_name = self.name_entry.get()
+        self.player_number = self.number_entry.get()
 
         if len(self.player_name) > 1 and len(self.player_number) > 1:
             # Calling the compare function
@@ -151,37 +160,11 @@ class Lotto:
             self.r3.config(text=self.r_num[3])
             self.r4.config(text=self.r_num[4])
             self.r5.config(text=self.r_num[5])
-            if len(self.res) == 6:
-                messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R10, 000 000.00')
-                self.file.write(f'{self.player_name}: won R10, 000 000.00 \n')
-                self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.x) + "\n \n")
-                self.file.close()
-            elif len(self.res) == 5:
-                messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R8,584.00')
-                self.file.write(f'{self.player_name}: won R8,584.00 \n')
-                self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.x) + "\n \n")
-                self.file.close()
-            elif len(self.res) == 4:
-                messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R2,384.00')
-                self.file.write(f'{self.player_name}: won R2,384.00 \n')
-                self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.x) + "\n \n")
-                self.file.close()
-            elif len(self.res) == 3:
-                messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R100.50')
-                self.file.write(f'{self.player_name}: won R100.50 \n')
-                self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.x) + "\n \n")
-                self.file.close()
-            elif len(self.res) == 2:
-                messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won R20.00')
-                self.file.write(f'{self.player_name}: won R20.00 \n')
-                self.file.write(f'Cell No: {self.player_number} \n')
-                self.file.write('Date: ' + str(self.x) + "\n \n")
-                self.file.close()
-            elif len(self.res) < 2:
+
+            if 2 <= len(self.res) <= 6:
+                messagebox.showinfo('Winner', f'Congratulations {self.player_name} you have won')
+                self.file_handling()
+            elif 0 <= len(self.res) <= 1:
                 messagebox.showinfo('You lose', 'Try again next time')
         else:
             messagebox.showerror('Input Error', 'Please make sure all the inputs are filled')

@@ -65,7 +65,7 @@ class Login:
         try:
             self.age = self.calc_age()
             self.today = date.today()
-            if 18 <= self.age <= 110 and type(self.age) == int:
+            if 18 <= self.age <= 130 and type(self.age) == int:
                 messagebox.showinfo("Successful", "Congatulations you qualify to play")
                 file = open('lotto_storage.txt', 'w')
                 file.write('File created on: ' + str(self.today) + "\n \n")
